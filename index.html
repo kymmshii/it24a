@@ -30,6 +30,29 @@
             maxZoom: 19,
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(map);
-    }
-    initMap();
+          fetch(mapDataUrl)
+     .then(response=>response.json())
+     .then(data=>{
+       
+            data.forEach(pin=>{
+                 const marker = L.marker([pin.lat,pin.lng]).addTo(map);
+                 const image= ` <img src=' ${pin.image}' class ="popup-image">`;
+                 marker.bindPopup(`
+                ${pin.title} <br> 
+                <hr>
+                ${image}
+                 `);
+
+        });
+
+       
+     });
+   }
+   
+initMap('campus-map.json');
+
+
+   
+
 </script>
+</html>
