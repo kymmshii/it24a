@@ -21,11 +21,44 @@
         height: auto;
         object-fit: fill;
     }
+    #locations{
+        width: 250px;
+    }
+    .location{
+        padding: 10px;
+        border-bottom: 10px solid #ddd;
+        cursor: pointer;
+    }
+    .location:hover{
+        background-color: #eee;
+    }
+    .container{
+        display: flex;
+        gap: 15px;
+    }
+    #map{
+        height: 500px;
+        flex: 1;
+    }
+    .popup.image{
+        max-width: 200px;
+        height: auto;
+        object-fit: fill;
+    }
+    
 </style>
 <body>
     <h1>Simple Maps</h1>
-    <div id="map"></div>
+    <div class="container">
+        <div id="locations">
+            <h3>Locations</h3>
+            <div id ="locations-list"></div>
+        </div>
+
+        <h3>Map</h3>
     
+    <div id="map"></div>
+    </div>
 </body>
 <script>
    
@@ -61,6 +94,16 @@
                 <hr>
                 ${image}
                  `);
+    //flyto
+        const item = document.createElement('div');
+        item.className = 'location';
+        item.textContent = pin.title;
+
+        document.getElementById('locations-list').appendChild(item);
+        item.onclick = () =>{
+            map.flyTo([pin.lat,pin.lng], 18);
+            marker.openPopup();
+        }
 
         });
 
@@ -70,6 +113,9 @@
         "Satellite": satellite
    }
    L.control.layers(baseMaps).addTo(map);
+
+   
+
     });
 }
    
